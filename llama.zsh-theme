@@ -1,3 +1,11 @@
+function llama_git_status {
+  local any_changes=$(git status --porcelain)
+
+  if [[ ! -z "$any_changes" ]]; then
+    echo "%{$fg[red]%}+"
+  fi
+}
+
 function llama_branch_name {
   local branch=$(git_current_branch)
   local prompt=""
@@ -10,6 +18,7 @@ function llama_branch_name {
 
   # Prettify the branch name.
   prompt+="%{$fg[yellow]%}["
+  prompt+=$(llama_git_status)
   prompt+="%{$fg[cyan]%}$branch"
   prompt+="%{$fg[yellow]%}]"
 
