@@ -1,5 +1,5 @@
 function llama_git_status {
-  local any_changes=$(git status --porcelain)
+  local any_changes="$(git status --porcelain)"
 
   if [[ ! -z "$any_changes" ]]; then
     echo "%{$fg[red]%}+"
