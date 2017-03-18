@@ -1,8 +1,13 @@
 function llama_git_status {
-  local any_changes="$(git status --porcelain)"
+  local unstaged_changes="$(git ls-files --others --modified --exclude-standard)"
+  local staged_changes="$(git diff --name-only --cached)"
 
-  if [[ ! -z "$any_changes" ]]; then
+  if [[ ! -z "$unstaged_changes" ]] && [[ ! -z "$staged_changes" ]]; then
+    echo "%{$fg[yellow]%}+"
+  elif [[ ! -z "$unstaged_changes" ]]; then
     echo "%{$fg[red]%}+"
+  elif [[ ! -z "$staged_changes" ]]; then
+    echo "%{$fg[green]%}+"
   fi
 }
 
