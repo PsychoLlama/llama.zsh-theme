@@ -22,7 +22,10 @@ function llama_venv_status {
     return
   fi
 
-  title="%{$fg[cyan]%}$(basename "$VIRTUAL_ENV")"
+  python_version="$(python --version 2>&1)"
+  version_only="${python_version/Python /}"
+  echo "$version_only" | IFS="." read major minor patch
+  title="%{$fg[cyan]%}$major.$minor"
 
   if [[ ! -z "$1" ]]; then
     title="%{$fg[yellow]%}($title%{$fg[yellow]%})"
